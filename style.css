@@ -126,7 +126,56 @@ body{
 }
 .navbar__middle{
 	display: none;
+
 }
+.navbar__img--midlle{
+	cursor: pointer;
+	transition: 1s;
+}
+.navbar__img--rotate{
+	transform: rotate(180deg);
+}
+/*-------*/
+.middle__container{
+	display: none;
+}
+.middle__container--visible{
+	position: absolute;
+	top: 15%;
+	left: 0;
+	width: 100%;
+	height: 562px;
+	display: flex;
+	flex-direction: column;
+	z-index: 15;
+	padding: 0;
+	background: #050403;
+}
+.middle__li {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 14px;
+	font-weight: bold;
+	padding: 20px 0;
+	list-style-type: none;
+	cursor: pointer;
+	transition: 0.4s;
+}
+.middle__li:hover{
+	background: rgb(255, 116, 0, 0.8);
+	transition: 0.7s;
+}
+.middle__phone {
+	display: none;
+}
+.middle__btn {
+	display: none;
+}
+.middle__btn:hover {
+	background: none;
+}
+/*-------*/
 .btn {
 	padding: 14px 18px;
 	background: #ff7400;
@@ -216,6 +265,10 @@ body{
 	.navbar__phone-flex{
 		display: none;
 	}
+	.middle__phone {
+	display: flex;
+	}
+
 
 	.header__text--h50 {
 	font-size: 30px;
@@ -238,6 +291,10 @@ body{
 	.navbar__btn{
 		display: none;
 	}
+
+.middle__btn {
+	display: flex;
+}
 }
 /*----------*/
 
@@ -652,10 +709,20 @@ body{
 	display: flex;
 	justify-content: space-between;
 }
-.slider__next {
+.slider__visible{
+	flex-grow: 1;
+	position: relative;
+	height: 510px;
+	overflow: hidden;
 }
+
 .slider__slides {
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 510px;
 	display: flex;
+	transition: 1s;
 }
 .slider__slide:last-child {
 	margin-right: 0;
@@ -666,7 +733,6 @@ body{
 	align-items: center;
 	width: 326px;
 	background: white;
-	margin-right: 20px;
 }
 .slider__recommended {
 	align-self: flex-start;
@@ -743,13 +809,13 @@ body{
 	margin-bottom: 30px;
 }
 .slider__next {
-	margin-left: 0px;
+	margin-left: 15px;
 	display: flex;
 	align-items: center;
 }
 
 .slider__down {
-	margin-right: 0px;
+	margin-right: 15px;
 	display: flex;
 	align-items: center;
 }
@@ -763,17 +829,45 @@ body{
 .slider__mob{
 	display: none;
 }
-@media screen and (max-width: 1158px) {
+@media screen and (max-width: 468px) {
 	.menu{
 		background-position: center center
 	}
-  .slider{
-  	display: none;
+  .slider__slide {
+  	width: 290px
   }
-  .slider__mob {
-  	display: flex;
-		justify-content: center;
-  }
+  .slider {
+  width: 100%;
+	display: grid;
+	grid-template-areas: "card card"
+											"down next";
+	grid-template-rows: 510px 80px;
+	grid-template-columns: repeat(2, 50%); 
+	justify-content: center;
+	}
+	.slider__visible{
+	grid-area: card;
+	width: 100%
+	}
+	.slider__down{
+		grid-area: down;
+	}
+	.slider__next {
+		grid-area: next;
+	}
+	.slider__next {
+	margin: 0;
+	justify-content: center;
+	display: flex;
+	align-items: center;
+}
+
+.slider__down {
+	margin: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 }
 
 /*--------------*/
