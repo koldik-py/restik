@@ -124,4 +124,146 @@ class Slider {
 
 x = new Slider('.slider')
 
+let navigations = (...arguments) => {
+	arguments.forEach( i => {
+		let btn = document.querySelectorAll(i),
+				head = document.querySelector('.header'),
+				history = document.querySelector('.history'),
+				menuHTML = document.querySelector('.menu'),
+				special = document.querySelector('.special');
 
+		btn[0].addEventListener('click', () => head.scrollIntoView())
+		btn[1].addEventListener('click', () => menuHTML.scrollIntoView())
+		btn[2].addEventListener('click', () => history.scrollIntoView())
+		btn[3].addEventListener('click', () => special.scrollIntoView())
+	})
+}
+
+navigations('.navbar__li', '.middle__li')
+
+let btn = document.querySelectorAll('.btn'),
+		menuHTML = document.querySelector('.menu');
+
+btn[2].addEventListener('click', () => menuHTML.scrollIntoView())
+
+
+class Btn {
+	constructor () {
+		this.visible = false;
+		this.mainHTML = document.querySelector('.order');
+		this.btnCards = document.querySelectorAll('.slider__btn');
+		this.btnAll = document.querySelectorAll('.btn');
+		this.exit = document.querySelector('.order__exit');
+
+		this.go()
+	}
+	go() {
+
+		this.btnAll.forEach((i, index) => {
+			index == 0 || index == 1 || index == 4 ?  this.btnAe(i) : null
+		})
+		this.btnCards.forEach(i => {
+			this.btnAe(i)
+		})
+
+		this.btnAe(this.exit)
+	}
+	btnAe (btn) {
+
+		btn.addEventListener('click', () => {
+			
+			!this.visible ? 
+				this.mainHTML.style.display = 'flex'
+										:
+				this.mainHTML.style.display = 'none';
+
+				this.visible = !this.visible 
+		})
+	}
+}
+y = new Btn()
+
+
+class Slider2 {
+	constructor(slideHTML) {
+		this.mainHTML = document.querySelector(`${slideHTML}__slider`);
+		this.panoHTML = document.querySelector(`${slideHTML}__slides`);
+		this.cardHTML = document.querySelector(`${slideHTML}__slide`);
+		this.visibleHTML = document.querySelector(`${slideHTML}__visible`);
+		this.checkHTML = document.querySelectorAll(`${slideHTML}__info-el`);
+		this.cardsHTML = document.querySelectorAll(`${slideHTML}__slide`);
+
+		// this.visibleW = this.visibleHTML.offsetWidth,
+		this.panoHeight()
+		this.margin = 100;
+		this.size =  this.cardHTML.offsetWidth;
+		this.all = this.cardsHTML.length;
+		this.num = Math.round(this.all / 2);
+
+		this.step = this.margin + this.size
+		this.now = -this.step
+
+		this.direction = true
+		
+		this.panoHTML.style.transform = `translateX(${-(this.step)}px)`
+		this.go()
+		window.addEventListener('resize', (e) => this.panoHeight())
+	}
+	go() {
+		this.check()
+		setInterval(() => {
+			this.manager()
+			this.check()
+		}, 5000)
+	}
+	manager() {
+		switch (this.direction){
+			case true:
+				this.num < this.all ? this.next() : (this.down(), this.direction = !this.direction)
+
+				break;
+			case false:
+				this.num > 1 ? this.down() : (this.next(), this.direction = !this.direction)
+				break;
+		}
+	}
+	check() {
+		this.checkHTML.forEach((i, index) => {
+
+			(index + 1) == this.num ?
+			i.classList.add('comment__info-el--now')
+			:
+			i.classList.remove('comment__info-el--now')
+
+		})
+	}
+	next(){
+		this.now = this.now - this.step
+		this.num += 1
+		this.panoHTML.style.transform = `translateX(${(this.now)}px)`
+	}
+	down(){
+		this.now = this.now + this.step
+		this.num -= 1
+		this.panoHTML.style.transform = `translateX(${(this.now)}px)`
+	}
+	panoHeight() {
+		this.cardsHTML.forEach(i => i.style.width = this.visibleHTML.offsetWidth + 'px')
+		this.visibleHTML.style.height = this.cardHTML.offsetHeight + 'px'
+		
+		this.margin = 100;
+		this.size =  this.cardHTML.offsetWidth;
+		this.all = this.cardsHTML.length;
+		this.num = Math.round(this.all / 2);
+
+		this.step = this.margin + this.size
+		this.now = -this.step
+
+		this.direction = true
+		
+		this.panoHTML.style.transform = `translateX(${-(this.step)}px)`
+	}
+	
+}
+
+j = new Slider2('.comment')
